@@ -21,7 +21,7 @@ function updateCasePrice(newCaseNumber) {
 
 // Phone Increase And descrease
 
-function updateCaseNumber(isIncreaes) {
+function updatePhoneNumber(isIncreaes) {
     const caseNumberField = document.getElementById('phone-number-field');
     const caseNumberFieldString = caseNumberField.value;
     previousCaseNumber = parseInt(caseNumberFieldString);
@@ -36,8 +36,37 @@ function updateCaseNumber(isIncreaes) {
     return newCaseNumber;
 }
 
-function updateCasePrice(newCaseNumber) {
+function updatePhonePrice(newCaseNumber) {
     const caseTotalPrice = newCaseNumber * 1219;
     const caseToElement = document.getElementById('phone-total');
     caseToElement.innerText = caseTotalPrice;
+}
+
+// Sub total
+function getTextElementValueById(elementId) {
+    const phoneTotalElement = document.getElementById(elementId);
+    const currentPhoneTotalString = phoneTotalElement.innerText;
+    const currentPhoneTotal = parseInt(currentPhoneTotalString);
+    return currentPhoneTotal;
+}
+function setTextElementValueById(elementId, value) {
+    const subTotalElement = document.getElementById(elementId);
+    subTotalElement.innerText = value;
+}
+function calculateSubTotal() {
+    // calculate total
+    const currentPhoneTotal = getTextElementValueById('phone-total');
+    const currentCaseTotal = getTextElementValueById('case-total');
+
+    const currentSubTotal = currentPhoneTotal + currentCaseTotal;
+    setTextElementValueById('sub-total', currentSubTotal);
+
+    // calculate tax
+    const taxAmmountString = (currentSubTotal * 0.1).toFixed(2);
+    const taxAmmount = parseFloat(taxAmmountString);
+    setTextElementValueById('tax', taxAmmount);
+
+    // calculate final Total
+    const finalTotal = currentSubTotal + taxAmmount;
+    setTextElementValueById('final-total', finalTotal);
 }
